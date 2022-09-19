@@ -1,3 +1,0 @@
-install: 
-  - FILE="-Dfile=flam-cam.aar" 
-  - mvn install:install-file $FILE -DgroupId=com.flam.flamcam -DartifactId=flamcam -Dversion=0.1 -Dpackaging=aar -DgeneratePom=true
