@@ -1,7 +1,5 @@
 # flam-cam-android-sdk
 
-[![](https://jitpack.io/v/homingos/flam-cam-android-sdk.svg)](https://jitpack.io/#homingos/flam-cam-android-sdk)
-
 ```java
 <activity
     android:name="com.flam.flamcam.FlamCamActivity"
