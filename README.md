@@ -135,6 +135,7 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, FlamCamActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         intent.putExtra("clientKey", "EnterSaaSKeyHere");
+        intent.putExtra("privateKey", "EnterPrivateKeyHere");
         intent.putExtra("clientName", "EnterSaaSNameHere");
         intent.putExtra("clientSource", "SAAS");
         startActivityForResult(intent, 1);
