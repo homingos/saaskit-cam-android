@@ -49,6 +49,7 @@ To load the Flam Cam use the below parameters, All parameters are required unles
 | Option        | Type              | Description                                                         |
 | :------------ | ----------------- | ------------------------------------------------------------------- |
 | `clientKey`   | string (required) | Flam SDK key recieved from `business.flamapp.com` after signin up.  |
+| `privateKey`  | string (required) | Flam SDK private key recieved from `business.flamapp.com` after signin up. |
 | `clientName`  | string (required) | Flam SDK name recieved from `business.flamapp.com` after signin up. |
 | `clientSource`| string (required) | SAAS                                                                |
 
