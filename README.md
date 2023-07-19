@@ -4,27 +4,20 @@ If you want to read the full API documentation of SaaS SDK, see [here].
 
 ## Index
 
-- [Installation](#installation)
-- [Sample](#sample)
-- [IssueReporting](#issuereporting)
-- [Author](#author)
+- [Flam Cam SaaS Android SDK](#flam-cam-saas-android-sdk)
+  - [Index](#index)
+  - [Installation](#installation)
+  - [Sample](#sample)
+  - [IssueReporting](#issuereporting)
+  - [Author](#author)
 
 ## Installation
 
 - Download and place the [flam-cam.aar] into your project libs folder.
-- Open settings.gradle file and add the following in pluginManagement and dependencyResolutionManagement repositories block
-- Or open app level build.gradle(Module: *.app) file and add the following in allprojects block
-```
-flatDir {
-    dirs 'libs'
-}
-```
-- Open app level build.gradle(Module: *.app) file and add the following in dependencies block
-```
-dependencies {
-    implementation(name: 'flam-cam', ext: 'aar')
-}
-```
+- Goto File->Project structure->Dependency
+  - To add dependency in the app module, choose '+' icon and choose JAR/AAR Dependency 
+  - input the path as ```libs/flam-cam.aar```  
+  - Check the build.gradle(:app) file for the added dependency
 - Add the following lines in gradle.properties file in the application root folder
 ```
 org.gradle.jvmargs=-Xmx4096M
@@ -43,6 +36,11 @@ unityTemplateVersion=3
     android:process=":Unity">
 </activity>
 ```
+- Add Game View string in res->values->string.xml
+```xml
+    <string name="game_view_content_description">Game view</string>
+```
+
 - Use below mentioned methods to load, unload Flam Cam.\
 To load the Flam Cam use the below parameters, All parameters are required unless otherwise stated.
 
@@ -98,15 +96,21 @@ public void onBackPressed() {
 
 Below is the sample activity code
 
+- Create a button in activity.xml file to launch the zingcam sdk
+- The shown example have sdkLaunch as its button id
+
 ```java
 package com.flamcam.sampleapp;
 
-import android.content.Intent;
-import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
+
+import android.os.Bundle;
+
+import android.content.Intent;
 import android.view.View;
 import android.widget.Toast;
+import android.util.Log;
+import android.widget.Button;
 
 import com.flam.flamcam.FlamCamActivity;
 import com.flam.flamcam.FlamBackButtonCallback;
@@ -118,10 +122,17 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+
+        Button myButton = findViewById(R.id.sdkLaunch);
+        myButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btnLoadFlamcam(v);
+            }
+        });
     }
 
     @Override
@@ -131,26 +142,37 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void loadFlamCam() {
+
         //Setting the boolean false
         isFlamCamLoaded = true;
         //Create the intent of Flam Cam and Start Activity
-        Intent intent = new Intent(this, FlamCamActivity.class);
+        Log.d("Debug", "Running");
+        Intent intent = new Intent(MainActivity.this, FlamCamActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-        intent.putExtra("clientKey", "EnterSaaSKeyHere");
-        intent.putExtra("privateKey", "EnterPrivateKeyHere");
-        intent.putExtra("clientName", "EnterSaaSNameHere");
+        intent.putExtra("clientKey", "<EnterSaaSKeyHere>");
+        intent.putExtra("privateKey", "<EnterPrivateKeyHere>");
+        intent.putExtra("clientName", "<EnterSaaSNameHere>");
         intent.putExtra("clientSource", "SAAS");
         startActivityForResult(intent, 1);
+        startActivity(intent);
+        // Display "Running" in the console
     }
+
 
     public void btnLoadFlamcam(View v) {
         loadFlamCam();
+        Log.d("Debug", "Button Clicked: loadFlamCam() called");
     }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == 1) isFlamCamLoaded = false;
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {
+            isFlamCamLoaded = false;
+        }
     }
+
 
     public void unloadFlamCam(Boolean doShowToast) {
         if (isFlamCamLoaded) {
