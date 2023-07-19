@@ -146,7 +146,6 @@ public class MainActivity extends AppCompatActivity {
         //Setting the boolean false
         isFlamCamLoaded = true;
         //Create the intent of Flam Cam and Start Activity
-        Log.d("Debug", "Running");
         Intent intent = new Intent(MainActivity.this, FlamCamActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         intent.putExtra("clientKey", "<EnterSaaSKeyHere>");
@@ -161,7 +160,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void btnLoadFlamcam(View v) {
         loadFlamCam();
-        Log.d("Debug", "Button Clicked: loadFlamCam() called");
     }
 
 
