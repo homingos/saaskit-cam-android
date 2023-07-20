@@ -24,7 +24,12 @@ org.gradle.parallel=true
 unityStreamingAssets=
 unityTemplateVersion=3
 ```
+- Make sure that the compileSdk is 33 in your build.gradle(:app)
 - Click Sync Now to do a project sync since Gradle files have been modified
+- Add the tools:replace to resolve conflicts for the theme in the 
+```xml
+tools:replace="android:theme"
+```
 - Add the FlamCamActivity to your app AndroidManifest.xml application tag as shown below
 ```java
 <activity
@@ -51,6 +56,18 @@ To load the Flam Cam use the below parameters, All parameters are required unles
 | `clientSource`| string (required) | SAAS                                                                |
 
 ```java
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Bundle;
+
+import android.content.Intent;
+import android.view.View;
+import android.widget.Toast;
+import android.util.Log;
+
+import com.flam.flamcam.FlamCamActivity;
+import com.flam.flamcam.FlamBackButtonCallback;
+
 public void loadFlamCam() {
     //Setting the boolean false
     isFlamCamLoaded = true;
@@ -92,9 +109,6 @@ public void onBackPressed() {
 ```
 
 ## Sample
-
-Below is the sample activity code
-
 - Create a button in activity_main.xml file to launch the zingcam sdk, below is the example Button tag
 - ```xml
     <Button
@@ -110,6 +124,8 @@ Below is the sample activity code
         app:layout_constraintVertical_bias="0.209" />
     ```
 - The shown example have sdkLaunch as its button id
+  
+Below is the sample activity code
 
 ```java
 package com.flamcam.sampleapp;
@@ -168,7 +184,6 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
         // Display "Running" in the console
     }
-
 
     public void btnLoadFlamcam(View v) {
         loadFlamCam();
