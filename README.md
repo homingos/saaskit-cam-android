@@ -108,7 +108,8 @@ Below is the sample activity code
         app:layout_constraintHorizontal_bias="0.139"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.209" />```
+        app:layout_constraintVertical_bias="0.209" />
+    ```
 - The shown example have sdkLaunch as its button id
 
 ```java
