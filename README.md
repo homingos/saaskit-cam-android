@@ -24,9 +24,9 @@ org.gradle.parallel=true
 unityStreamingAssets=
 unityTemplateVersion=3
 ```
-- Make sure that the compileSdk is 33 in your build.gradle(:app)
+- Make sure that the compileSdk is 33 in your build.gradle(:app). Inside Android block
 - Click Sync Now to do a project sync since Gradle files have been modified
-- Add the tools:replace to resolve conflicts for the theme in the 
+- Add the tools:replace to resolve conflicts for the theme in the AndroidManifest.xml
 ```xml
 tools:replace="android:theme"
 ```
