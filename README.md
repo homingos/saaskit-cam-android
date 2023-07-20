@@ -1,6 +1,5 @@
 # Flam Cam SaaS Android SDK
 Client Side Android SDK for Flam Cam SaaS.
-If you want to read the full API documentation of SaaS SDK, see [here].
 
 ## Index
 
@@ -232,6 +231,6 @@ If you have found a bug or if you have a feature request, please report them at 
 [//]: # (These are reference links used in the body of this note and get stripped out when the markdown processor does its job. There is no need to format nicely because it shouldn't be seen. Thanks SO - http://stackoverflow.com/questions/4823468/store-comments-in-markdown-syntax)
 
 [here]: <https://business.flamapp.com>
-[flam-cam.aar]: <https://github.com/homingos/flam-cam-android-sdk/blob/main/flam-cam.aar>
+[flam-cam.aar]: <https://github.com/homingos/saaskit-cam-android/blob/2.0/flam-cam.aar>
 [Support Center]: <https://help.flamapp.com>
 [Flam]: <https://flamapp.com>
