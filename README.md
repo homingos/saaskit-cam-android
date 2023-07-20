@@ -96,7 +96,7 @@ public void onBackPressed() {
 
 Below is the sample activity code
 
-- Create a button in activity.xml file to launch the zingcam sdk, below is the example Button tag
+- Create a button in activity_main.xml file to launch the zingcam sdk, below is the example Button tag
 - ```xml
     <Button
         android:id="@+id/sdkLaunch"
