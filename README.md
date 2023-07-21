@@ -17,7 +17,7 @@ Client Side Android SDK for Flam Cam SaaS.
   - To add dependency in the app module, choose '+' icon and choose JAR/AAR Dependency 
   - input the path as ```libs/flam-cam.aar```  
   - Check the build.gradle(:app) file for the added dependency
-- Add the following lines in gradle.properties file in the application root folder
+- Add the following lines in gradle.properties file in the application root folder, make sure there are no duplicate variables
 ```
 org.gradle.jvmargs=-Xmx4096M
 org.gradle.parallel=true
