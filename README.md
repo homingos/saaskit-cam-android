@@ -25,6 +25,14 @@ unityStreamingAssets=
 unityTemplateVersion=3
 ```
 - Make sure that the compileSdk is 33 in your build.gradle(:app). Inside Android block
+- And make sure that the minSDK is 26 in 
+```build.gradle
+android{
+    default{
+        minSdk 26
+    }
+}
+```
 - Click Sync Now to do a project sync since Gradle files have been modified
 - Add the tools:replace to resolve conflicts for the theme in the AndroidManifest.xml
 ```xml
