@@ -1,38 +1,43 @@
 # Flam Cam SaaS Android SDK
 Client Side Android SDK for Flam Cam SaaS.
-If you want to read the full API documentation of SaaS SDK, see [here].
 
 ## Index
 
-- [Installation](#installation)
-- [Sample](#sample)
-- [IssueReporting](#issuereporting)
-- [Author](#author)
+- [Flam Cam SaaS Android SDK](#flam-cam-saas-android-sdk)
+  - [Index](#index)
+  - [Installation](#installation)
+  - [Sample](#sample)
+  - [IssueReporting](#issuereporting)
+  - [Author](#author)
 
 ## Installation
 
 - Download and place the [flam-cam.aar] into your project libs folder.
-- Open settings.gradle file and add the following in pluginManagement and dependencyResolutionManagement repositories block
-- Or open app level build.gradle(Module: *.app) file and add the following in allprojects block
-```
-flatDir {
-    dirs 'libs'
-}
-```
-- Open app level build.gradle(Module: *.app) file and add the following in dependencies block
-```
-dependencies {
-    implementation(name: 'flam-cam', ext: 'aar')
-}
-```
-- Add the following lines in gradle.properties file in the application root folder
+- Goto File->Project structure->Dependency
+  - To add dependency in the app module, choose '+' icon and choose JAR/AAR Dependency 
+  - input the path as ```libs/flam-cam.aar```  
+  - Check the build.gradle(:app) file for the added dependency
+- Add the following lines in gradle.properties file in the application root folder, make sure there are no duplicate variables
 ```
 org.gradle.jvmargs=-Xmx4096M
 org.gradle.parallel=true
 unityStreamingAssets=
 unityTemplateVersion=3
 ```
+- Make sure that the compileSdk is 33 in your build.gradle(:app). Inside Android block
+- And make sure that the minSDK is 26 in 
+```build.gradle
+android{
+    default{
+        minSdk 26
+    }
+}
+```
 - Click Sync Now to do a project sync since Gradle files have been modified
+- Add the tools:replace to resolve conflicts for the theme in the AndroidManifest.xml
+```xml
+tools:replace="android:theme"
+```
 - Add the FlamCamActivity to your app AndroidManifest.xml application tag as shown below
 ```java
 <activity
@@ -43,6 +48,11 @@ unityTemplateVersion=3
     android:process=":Unity">
 </activity>
 ```
+- Add Game View string in res->values->string.xml
+```xml
+    <string name="game_view_content_description">Game view</string>
+```
+
 - Use below mentioned methods to load, unload Flam Cam.\
 To load the Flam Cam use the below parameters, All parameters are required unless otherwise stated.
 
@@ -54,6 +64,18 @@ To load the Flam Cam use the below parameters, All parameters are required unles
 | `clientSource`| string (required) | SAAS                                                                |
 
 ```java
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Bundle;
+
+import android.content.Intent;
+import android.view.View;
+import android.widget.Toast;
+import android.util.Log;
+
+import com.flam.flamcam.FlamCamActivity;
+import com.flam.flamcam.FlamBackButtonCallback;
+
 public void loadFlamCam() {
     //Setting the boolean false
     isFlamCamLoaded = true;
@@ -95,18 +117,36 @@ public void onBackPressed() {
 ```
 
 ## Sample
-
+- Create a button in activity_main.xml file to launch the zingcam sdk, below is the example Button tag
+- ```xml
+    <Button
+        android:id="@+id/sdkLaunch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Launch SDK"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.139"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.209" />
+    ```
+- The shown example have sdkLaunch as its button id
+  
 Below is the sample activity code
 
 ```java
 package com.flamcam.sampleapp;
 
-import android.content.Intent;
-import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
+
+import android.os.Bundle;
+
+import android.content.Intent;
 import android.view.View;
 import android.widget.Toast;
+import android.util.Log;
+import android.widget.Button;
 
 import com.flam.flamcam.FlamCamActivity;
 import com.flam.flamcam.FlamBackButtonCallback;
@@ -118,10 +158,17 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+
+        Button myButton = findViewById(R.id.sdkLaunch);
+        myButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btnLoadFlamcam(v);
+            }
+        });
     }
 
     @Override
@@ -131,26 +178,34 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void loadFlamCam() {
+
         //Setting the boolean false
         isFlamCamLoaded = true;
         //Create the intent of Flam Cam and Start Activity
-        Intent intent = new Intent(this, FlamCamActivity.class);
+        Intent intent = new Intent(MainActivity.this, FlamCamActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-        intent.putExtra("clientKey", "EnterSaaSKeyHere");
-        intent.putExtra("privateKey", "EnterPrivateKeyHere");
-        intent.putExtra("clientName", "EnterSaaSNameHere");
+        intent.putExtra("clientKey", "<EnterSaaSKeyHere>");
+        intent.putExtra("privateKey", "<EnterPrivateKeyHere>");
+        intent.putExtra("clientName", "<EnterSaaSNameHere>");
         intent.putExtra("clientSource", "SAAS");
         startActivityForResult(intent, 1);
+        startActivity(intent);
+        // Display "Running" in the console
     }
 
     public void btnLoadFlamcam(View v) {
         loadFlamCam();
     }
 
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == 1) isFlamCamLoaded = false;
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {
+            isFlamCamLoaded = false;
+        }
     }
+
 
     public void unloadFlamCam(Boolean doShowToast) {
         if (isFlamCamLoaded) {
@@ -199,6 +254,6 @@ If you have found a bug or if you have a feature request, please report them at 
 [//]: # (These are reference links used in the body of this note and get stripped out when the markdown processor does its job. There is no need to format nicely because it shouldn't be seen. Thanks SO - http://stackoverflow.com/questions/4823468/store-comments-in-markdown-syntax)
 
 [here]: <https://business.flamapp.com>
-[flam-cam.aar]: <https://github.com/homingos/flam-cam-android-sdk/blob/main/flam-cam.aar>
+[flam-cam.aar]: <https://github.com/homingos/saaskit-cam-android/blob/2.0/flam-cam.aar>
 [Support Center]: <https://help.flamapp.com>
 [Flam]: <https://flamapp.com>
