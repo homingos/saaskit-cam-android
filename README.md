@@ -44,7 +44,7 @@ tools:replace="android:theme"
     android:name="com.flam.flamcam.FlamCamActivity"
     android:screenOrientation="fullSensor"
     android:configChanges="mcc|mnc|locale|touchscreen|keyboard|keyboardHidden|navigation|orientation|screenLayout|uiMode|screenSize|smallestScreenSize|fontScale|layoutDirection|density"
-    android:hardwareAccelerated="false"
+    android:hardwareAccelerated="true"
     android:process=":Unity">
 </activity>
 ```
