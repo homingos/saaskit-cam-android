@@ -184,9 +184,10 @@ public class MainActivity extends AppCompatActivity {
         //Create the intent of Flam Cam and Start Activity
         Intent intent = new Intent(MainActivity.this, FlamCamActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-        intent.putExtra("clientKey", "<EnterSaaSKeyHere>");
+        intent.putExtra("clientKey", "<EnterSaaSKeyHere>"); // eg: "2.0"
         intent.putExtra("privateKey", "<EnterPrivateKeyHere>");
         intent.putExtra("clientName", "<EnterSaaSNameHere>");
+        intent.putExtra("clientSecret", "<EnterClientSecret>"); // eg: "2.0"
         intent.putExtra("clientSource", "SAAS");
         startActivityForResult(intent, 1);
         startActivity(intent);
